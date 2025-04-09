@@ -24,3 +24,36 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+nav {
+  font-family: var(--font-yatra-one);
+}
+.hname{
+  font-family: var(--font-protest-riot);
+}
+.hbox{
+  background-image: linear-gradient(270deg, rgba(200, 200, 200, 0.1), rgba(103, 204, 170, 0.1));
+}
+.ali{
+  position: relative;
+}
+.ali::before{
+  position: absolute;
+  z-index: 2 ;
+  content: "";
+  width: 0%;
+  left: 0;
+  bottom: 0;
+  transition: .3s;
+  background-color: aliceblue;
+}
+.ali:hover:before{
+  position: absolute;
+  z-index: 2 ;
+  content: "";
+  height: .1px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  box-shadow: 0 0 3px 1px rgb(11, 255, 185);
+  background-color: rgb(5, 164, 119);
+}
