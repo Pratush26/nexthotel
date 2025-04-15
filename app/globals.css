@@ -31,7 +31,7 @@ nav {
   font-family: var(--font-protest-riot);
 }
 .hbox{
-  background-image: linear-gradient(270deg, rgba(200, 200, 200, 0.1), rgba(103, 204, 170, 0.1));
+  background-image: linear-gradient(270deg, rgba(83, 118, 103, 0.1), rgba(42, 94, 76, 0.048));
 }
 .ali{
   position: relative;

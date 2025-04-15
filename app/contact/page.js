@@ -49,7 +49,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-2 rounded-lg bg-emerald-900/50 border border-emerald-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
                     placeholder="Your name"
                   />
                 </div>
@@ -57,7 +57,7 @@ export default function Contact() {
                   <label htmlFor="rating" className="block text-sm font-medium text-white mb-1">Rating</label>
                   <select
                     id="rating"
-                    className="w-full px-4 py-2 rounded-lg bg-emerald-900/50 border border-emerald-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-gray-700"
                   >
                     <option value="">Select your rating</option>
                     <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
@@ -72,13 +72,13 @@ export default function Contact() {
                   <textarea
                     id="feedback"
                     rows="4"
-                    className="w-full px-4 py-2 rounded-lg bg-emerald-900/50 border border-emerald-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
                     placeholder="Share your experience with us..."
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+                  className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
                 >
                   Submit Feedback
                 </button>
