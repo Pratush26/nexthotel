@@ -10,7 +10,6 @@ export default function Room({ room }) {
         {room.description}
       </p>
       <div className="flex justify-center items-center mt-2">
-        <button className="bg-blue-500 text-white px-3 py-1 rounded-lg">Book Now</button>
         <button className="text-gray-300 underline italic px-3 py-1">See Details &gt;</button>
       </div>
     </div>

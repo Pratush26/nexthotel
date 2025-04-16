@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -14,6 +15,9 @@ export default function Home() {
         </div>
       </div>
       <div className="absolute top-full w-full bg-emerald-900">
+        <Link href="/booknow" className="text-4xl text-center font-bold">Book now</Link>
+        <h1 className="text-4xl text-center font-bold underline">Notices</h1>
+        <h1 className="text-4xl text-center font-bold underline">Gallary</h1>
         <p className="text-center">
           &copy; 2025 Bandarban. All rights reserved.
         </p>

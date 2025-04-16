@@ -1,4 +1,5 @@
 import Room from "@/components/room";
+import Link from "next/link";
 export default function Explore() {
   const rooms = [
     {
@@ -78,7 +79,8 @@ export default function Explore() {
   
   return (
     <main className="flex flex-col justify-center items-center">
-      <h1 className="text-5xl m-14 font-bold">Explore Our Rooms collection</h1>
+      <h1 className="text-5xl m-6 font-bold">Explore Our Rooms collection</h1>
+      <Link href="/booknow" className="bg-blue-500 text-white font-bold px-9 py-3 cursor-pointer hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-lg m-6">Book Now</Link>
       <div className="flex flex-wrap justify-center items-center gap-6">
         {rooms.map((room) => (
           <Room key={room.name} room={room} />
