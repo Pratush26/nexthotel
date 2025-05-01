@@ -74,7 +74,102 @@ export default function Explore() {
       type: "Non-AC Room",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
     },
-
+    {
+      name: "Romesh-01",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Romesh-02",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Romesh-03",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Romesh-04",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Shomesh-01",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Shomesh-02",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Shomesh-03",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Shomesh-04",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Kalpesh-01",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Kalpesh-02",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Kalpesh-03",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Kalpesh-04",
+      image: "/window.svg",
+      type: "Non-AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Jitesh-01",
+      image: "/window.svg",
+      type: "AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Jitesh-02",
+      image: "/window.svg",
+      type: "AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Jitesh-03",
+      image: "/window.svg",
+      type: "AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
+    {
+      name: "Jitesh-04",
+      image: "/window.svg",
+      type: "AC Room",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",      
+    },
   ];
   
   return (

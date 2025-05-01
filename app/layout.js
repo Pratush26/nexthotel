@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Yatra_One, Underdog, Poppins, Protest_Revolution, Protest_Riot} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import SmoothScroll from "@/components/LeinsScroll";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -53,7 +54,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${yatraOne.variable} ${underdog.variable} ${poppins.variable} ${protestRevolution.variable} ${protestRiot.variable}   antialiased`}
       >
         <Navbar />
+        <SmoothScroll>
         {children}
+        </SmoothScroll>
       </body>
     </html>
   );
