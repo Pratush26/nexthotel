@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
     <main>
       <div className="w-full h-screen absolute top-0 left-0 -z-10">
+        <Suspense fallback={<div className="w-full h-screen bg-emerald-950"></div>}>
         <Image src="https://images.pexels.com/photos/939715/pexels-photo-939715.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Picture of the author" fill={true} className="object-cover grayscale-25 contrast-100 saturate-100 brightness-60" />
+        </Suspense>
         <div className="flex flex-col justify-center items-center h-screen">
           <div className="flex flex-col justify-center items-center mt-[10%] backdrop-blur-[16px] py-10 px-30 rounded-4xl hbox">
             <h1 className="text-3xl flex items-baseline gap-2 font-bold text-center">Welcome to <p className="text-4xl text-emerald-200 font-bold text-center">Bandarban</p></h1>

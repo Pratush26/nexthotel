@@ -1,3 +1,4 @@
+import { Camera, Heart, Search, Wifi } from "lucide-react";
 export default function Facilities() {
   return (
     <main>
@@ -10,6 +11,10 @@ export default function Facilities() {
             <li>Free water and juice</li>
             <li>LED TV and restaurant</li>
         </ul>
+        <Camera />
+      <Heart />
+      <Search />
+      <Wifi />
         <ul className="flex flex-col justify-center items-baseline gap-1 p-12 text-lg font-semibold text-gray-200 list-disc">
             <li>Free Breakfast and meal</li>
             <li>Sound system and BAR-BQ party facility</li>
