@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
+import ComplaintSub from "@/app/actions/ComplaintSubmission";
+import FeedbackSub from "@/app/actions/FeedbackSubmission";
 
 export default function FeedbackForm() {
   const {
@@ -16,12 +18,13 @@ export default function FeedbackForm() {
   const [activeForm, setActiveForm] = useState("rating");
   const [rating, setRating] = useState(0);
 
-  const handleComplaintSubmit = (data) => {
+  const handleComplaintSubmit = async (data) => {
+    await ComplaintSub(data);
     console.log("Complaint submitted:", data);
     reset();
   };
 
-  const handleRatingSubmit = (data) => {
+  const handleRatingSubmit = async (data) => {
     if (rating === 0) {
       setError("rating", {
         type: "manual",
@@ -29,7 +32,7 @@ export default function FeedbackForm() {
       });
       return;
     }
-
+    await FeedbackSub(data, rating);
     console.log("Rating submitted:", { ...data, rating });
     reset();
     setRating(0);
@@ -41,9 +44,8 @@ export default function FeedbackForm() {
   };
 
   return (
-    <div className="bg-emerald-800/30 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
+    <div className="bg-emerald-800/30 p-8 rounded-2xl shadow-xl w-11/12 lg:w-5/6 md:w-2/3">
       <h2 className="text-2xl font-semibold text-white mb-6 text-center">Share Your {activeForm === "complaint" ? "Allegation" : "Feedback"}</h2>
-
       {/* Toggle Buttons */}
       <div className="flex justify-center gap-6 mb-6 text-white relative">
         {["complaint", "rating"].map((type) => (
