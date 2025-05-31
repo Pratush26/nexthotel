@@ -5,8 +5,8 @@ import {
   WavesLadder,
   TvIcon,
   Music,
-  FanIcon,
   Wifi,
+  AirVent,
 } from "lucide-react";
 import { connectDB } from "@/lib/mongoose";
 import Feedback from "@/models/Feedback";
@@ -35,7 +35,7 @@ export default async function Facilities() {
     { name: "Free Breakfast and meal", icon: Utensils },
     { name: "Sound system and BAR-BQ party facility", icon: Music },
     { name: "Medium size, clean, rounded Swimming pool", icon: WavesLadder },
-    { name: "Both AC and Non-AC room at affordable price", icon: FanIcon },
+    { name: "Both AC and Non-AC room at affordable price", icon: AirVent },
   ];
 
   return (
