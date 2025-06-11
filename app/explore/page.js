@@ -25,7 +25,7 @@ export default function Explore({ searchParams }) {
     <main className="flex flex-col justify-center items-center">
       <h1 className="text-5xl m-6 font-bold">Explore Our Room collection</h1>
       <div className="flex flex-wrap justify-evenly w-full gap-3">
-        <Link href='/booknow/identity' className="bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold hover:bg-emerald-800 transition-all duration-300 hover:scale-105">Book Now</Link>
+        <Link href='/booknow' className="bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold hover:bg-emerald-800 transition-all duration-300 hover:scale-105">Book Now</Link>
         <span className="flex flex-wrap justify-center items-center gap-2">
         {filters.map(({ label, value }) => {
           const href = value ? `/explore?type=${encodeURIComponent(value)}` : `/explore`;

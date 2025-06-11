@@ -23,7 +23,7 @@ export default function Home() {
       </div>
       <div className="absolute top-full w-full bg-emerald-900">
         <div className="flex justify-center items-center m-20">
-        <Link href="/booknow/identity" className="bg-emerald-400 animate-bounce text-emerald-950 px-10 py-5 rounded-2xl text-xl text-center font-bold shadow-black shadow-2xl hover:bg-emerald-600 hover:scale-110 hover:text-gray-300 transition-all duration-400">Your relaxing escape awaits | reserve today</Link>
+        <Link href="/booknow" className="bg-emerald-400 animate-bounce text-emerald-950 px-10 py-5 rounded-2xl text-xl text-center font-bold shadow-black shadow-2xl hover:bg-emerald-600 hover:scale-110 hover:text-gray-300 transition-all duration-400">Your relaxing escape awaits | reserve today</Link>
         </div>
         <Gallary />
         <h1 className="text-4xl text-center font-bold underline">Notices</h1>
