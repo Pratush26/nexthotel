@@ -2,6 +2,8 @@ import { Geist, Geist_Mono, Yatra_One, Underdog, Poppins, Protest_Revolution, Pr
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/LeinsScroll";
+import NextTopLoader from "nextjs-toploader";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -59,6 +61,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${yatraOne.variable} ${underdog.variable} ${poppins.variable} ${protestRevolution.variable} ${protestRiot.variable}   antialiased`}
       >
+        <NextTopLoader color="#045101" showSpinner={false} />
         <Navbar />
         <SmoothScroll>
         {children}

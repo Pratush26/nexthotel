@@ -22,11 +22,11 @@ export default function RoomDetail({ params }) {
             </li>
           ))}
         </ul>
-        <div className="flex items-center justify-between gap-6 sm:gap-10">
+        <div className="flex items-center justify-between gap-10">
         <Link href="/booknow/identity" className="bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold hover:bg-emerald-800 hover:scale-105 transition-all duration-300">
           Book Now
         </Link>
-          <p className="text-lg">BDT - {room.price}৳ / night</p>
+          <p className="text-lg">{room.price}৳ / night</p>
         </div>
       </section>
     </main>

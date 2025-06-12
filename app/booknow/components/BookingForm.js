@@ -20,6 +20,7 @@ const roomOptions = rooms.map((room) => ({
 
 
 export default function BookNow() {
+  const [checkPrice, setChcekPrice] = useState(false)
   const { step, setStep } = useStep();
   const [checkinDate, setCheckinDate] = useState(null);
   const [checkoutDate, setCheckoutDate] = useState(null);
@@ -46,6 +47,8 @@ export default function BookNow() {
     },
   });
   const selectedMethod = watch("paymentMethod");
+  const selectedRooms = watch("rooms");
+  const coupon = checkPrice && watch("coupon")==="ok"? true : false;
   const onSubmit = async (data) => {
     console.log(data);
     await SubmitBooking(data);
@@ -170,7 +173,7 @@ export default function BookNow() {
               )}
             />
           </label>
-          
+
           {/* Checkout Date */}
           <label className="text-white flex flex-col items-center justify-center w-full">
             {errors.checkout ?
@@ -267,17 +270,66 @@ export default function BookNow() {
               )}
             />
           </div>
-          <button className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6" type="submit">Check Price</button>
+          <button onClick={() => { setChcekPrice(true) }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6" type="button">Check Price</button>
         </div>
-        <div className="flex flex-col items-center justify-center w-full">
-          <span className="text-white bg-emerald-800 p-4 rounded-2xl inset-shadow-sm inset-shadow-emerald-950 w-full text-center">
-            <h6 className="font-semibold">Price estimate</h6>
+        <div className="text-white bg-emerald-800 p-4 rounded-2xl inset-shadow-sm inset-shadow-emerald-950 w-5/6 text-center">
+          <h6 className="font-semibold">Price estimate</h6>
+          {selectedRooms && selectedRooms.length > 0 && (<>
+            <div className="flex justify-between items-center w-full gap-2">
+              <section className="flex flex-col items-center">
+                {selectedRooms.map((room, index) => (
+                  <motion.span className="px-3 py-1 rounded-full text-sm"
+                    key={room.value}
+                    initial={{ x: 10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{
+                      duration: 0.3,
+                      type: "spring",
+                      stiffness: 300,
+                    }}>
+                    {room.value}
+                  </motion.span>
+                ))}
+              </section>
+              <section className="flex flex-col items-center">
+                {selectedRooms.map((room, index) => (
+                  <p key={index}>{room.price}/=</p>
+                ))}
+              </section>
+            </div>
+          
+          <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
+          <section>
+            {coupon &&
+              <div>
+            <div className="flex items-center justify-between">
+            <p>Total Amount</p>
             <p>2000/=</p>
-          </span>
-          <div className="flex items-center justify-center w-full">
-            <button onClick={() => { setStep(step - 1) }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6 flex gap-1"><Image src="/leftarrow.svg" className="dark:invert" width={14} height={14} alt="i" />Go Back</button>
-            <button onClick={() => { setStep(step + 1) }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6 flex gap-1">Confirm Booking<Image src="/rightarrow.svg" className="dark:invert" width={14} height={14} alt="i" /></button>
-          </div>
+            </div>
+            <div className="flex items-center justify-between">
+            <p>Coupon</p>
+            <p>2000/=</p>
+            </div>
+            <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
+            </div>}
+            <div className="flex items-center justify-between">
+            <p>Final Amount</p>
+            <p>2000/=</p>
+            </div>
+          </section>
+          </>
+          )}
+        </div>
+        <div className="flex items-center justify-center w-full">
+          <button onClick={() => { setStep(step - 1) }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6 flex gap-1"><Image src="/leftarrow.svg" className="dark:invert" width={14} height={14} alt="i" />Go Back</button>
+          <button onClick={async () => {
+            const isValid = await trigger(["checkin", "checkout", "rooms"]); // validate these fields
+            if (isValid) {
+              const data = watch();
+              console.log(data);
+              setStep(step + 1);
+            }
+          }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6 flex gap-1">Confirm Booking<Image src="/rightarrow.svg" className="dark:invert" width={14} height={14} alt="i" /></button>
         </div>
       </>)}
 
