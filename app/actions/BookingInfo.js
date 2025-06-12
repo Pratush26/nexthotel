@@ -23,12 +23,12 @@ export default async function submitBooking(data) {
       name,
       email,
       phone,
-      checkin: new Date(checkin),
-      checkout: new Date(checkout),
-      coupon,
+      checkInDate: new Date(checkin),         // ✔ Correct field
+      checkOutDate: new Date(checkout),       // ✔ Correct field
+      couponCode: coupon,                     // ✔ Correct field
       paymentMethod,
       trxId,
-      roomNo: rooms.map((r) => r.value),
+      roomNo: rooms.map((r) => r.value),      // ✔ Correct field
     });
 
     await newBooking.save();
@@ -37,3 +37,4 @@ export default async function submitBooking(data) {
     console.error("❌ Error submitting Booking:", err);
   }
 }
+
