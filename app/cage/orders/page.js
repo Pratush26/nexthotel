@@ -1,0 +1,62 @@
+import { connectDB } from "@/lib/mongoose";
+import BookingRequest from "@/models/BookingRequest";
+import DeleteRequestBtn from "@/components/DeleteRequest";
+import PendingBookings from "@/components/PendingBookings";
+import Booking from "@/models/Booking";
+
+export default async function Bookings() {
+  let bookingDocs = [];
+  let bookingReqDocs = [];
+
+  try {
+    await connectDB();
+    const rawDocs = await BookingRequest.find().sort({ createdAt: -1 }).lean();
+    const rowDocs = await Booking.find().sort({ createdAt: -1 }).lean();
+
+    // 🔥 Convert _id and date fields to strings
+    bookingReqDocs = rawDocs.map(doc => ({
+      ...doc,
+      _id: doc._id.toString(),
+      createdAt: doc.createdAt?.toISOString(),
+      updatedAt: doc.updatedAt?.toISOString(),
+    }));
+    bookingDocs = rowDocs.map(doc => ({
+      ...doc,
+      _id: doc._id.toString(),
+      createdAt: doc.createdAt?.toISOString(),
+      updatedAt: doc.updatedAt?.toISOString(),
+    }));
+  } catch (error) {
+    console.error("Error loading BookingRequests:", error);
+  }
+
+  return (
+    <main className="flex justify-center items-center min-h-screen flex-col p-4">
+      <h1 className="font-bold text-4xl text-center m-6 text-gray-700">All Booking Request</h1>
+      <div className="grid grid-cols-2 w-full gap-8">
+        <h2 className="font-bold text-2xl text-center">Booking Requests</h2>
+        <h2 className="font-bold text-2xl text-center">Pending Bookings</h2>
+
+        {/* Searchable, scrollable list */}
+        <aside className="flex flex-col gap-4 h-screen overflow-y-auto custom-scrollbar pr-4">
+          {bookingReqDocs.map((it) => (
+            <span
+              key={it._id}
+              className="flex flex-col md:flex-row justify-between w-full rounded-2xl border border-amber-50 sm:px-18 px-4 py-6"
+            >
+              <div className="flex flex-col gap-2">
+                <p>{it.name}</p>
+                <p>{it.email}</p>
+                <p>{it.phone}</p>
+              </div>
+              <DeleteRequestBtn id={it._id} />
+            </span>
+          ))}
+        </aside>
+        {/* Pass cleaned data to another Client Component */}
+        <PendingBookings bookingDocs={bookingDocs} />
+      </div>
+    </main>
+  );
+}
+

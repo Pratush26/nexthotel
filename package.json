@@ -11,6 +11,7 @@
   "dependencies": {
     "@next/font": "^14.2.15",
     "@studio-freight/lenis": "^1.0.42",
+    "bcryptjs": "^3.0.2",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.511.0",

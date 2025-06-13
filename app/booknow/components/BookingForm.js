@@ -11,13 +11,11 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
 const roomOptions = rooms.map((room) => ({
   value: room.name,
   label: `${room.name} - ৳${room.price} - ${room.type}`,
   price: room.price,
 }));
-
 
 export default function BookNow() {
   const [checkPrice, setChcekPrice] = useState(false)
@@ -48,11 +46,14 @@ export default function BookNow() {
   });
   const selectedMethod = watch("paymentMethod");
   const selectedRooms = watch("rooms");
-  const coupon = checkPrice && watch("coupon")==="ok"? true : false;
+  const coupon = checkPrice && watch("coupon") === "ok" ? true : false;
   const onSubmit = async (data) => {
     console.log(data);
     await SubmitBooking(data);
     reset(); // Reset the form after submission
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
   if (!isMounted) return null;
   return (
@@ -297,26 +298,26 @@ export default function BookNow() {
                 ))}
               </section>
             </div>
-          
-          <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
-          <section>
-            {coupon &&
-              <div>
-            <div className="flex items-center justify-between">
-            <p>Total Amount</p>
-            <p>2000/=</p>
-            </div>
-            <div className="flex items-center justify-between">
-            <p>Coupon</p>
-            <p>2000/=</p>
-            </div>
+
             <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
-            </div>}
-            <div className="flex items-center justify-between">
-            <p>Final Amount</p>
-            <p>2000/=</p>
-            </div>
-          </section>
+            <section>
+              {coupon &&
+                <div>
+                  <div className="flex items-center justify-between">
+                    <p>Total Amount</p>
+                    <p>2000/=</p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p>Coupon</p>
+                    <p>2000/=</p>
+                  </div>
+                  <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
+                </div>}
+              <div className="flex items-center justify-between">
+                <p>Final Amount</p>
+                <p>2000/=</p>
+              </div>
+            </section>
           </>
           )}
         </div>

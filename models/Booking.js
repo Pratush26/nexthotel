@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const BookingSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String },
-    phone: { type: String, required: true },
+    phone: { type: Number, required: true },
     checkInDate: { type: Date },
     checkOutDate: { type: Date },
     couponCode: { type: String },

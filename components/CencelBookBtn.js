@@ -1,14 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { handleDelete } from "@/app/actions/HandleDeleteRequest";
+import { CencelBooking } from "@/app/actions/CencelBooking";
 
-export default function DeleteRequestBtn({ id }) {
+export default function CencelBookBtn({ id }) {
   const router = useRouter();
 
   async function onDelete() {
     try {
-      await handleDelete(id);
+      await CencelBooking(id);
       router.refresh();  // refresh the page to update UI after deletion
     } catch (error) {
       console.error("Delete failed", error);
@@ -16,8 +16,8 @@ export default function DeleteRequestBtn({ id }) {
   }
 
   return (
-    <button onClick={onDelete} className="text-pink-700 hover:underline cursor-pointer">
-      Delete
+    <button onClick={onDelete} className="text-pink-800 cursor-pointer hover:underline text-wrap text-center">
+      Cencel Booking
     </button>
   );
 }

@@ -81,4 +81,3 @@ export default async function Facilities() {
     </main>
   );
 }
-export const dynamic = "force-dynamic";
