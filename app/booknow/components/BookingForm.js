@@ -4,20 +4,15 @@ import { useStep } from "../StepContext";
 import { useForm, Controller } from "react-hook-form";
 import ClientDetails from "@/app/actions/ClientDetails";
 import SubmitBooking from "@/app/actions/BookingInfo";
+import generateDateRange from "@/app/actions/DateArr";
 import Image from "next/image";
-import { rooms } from "@/app/data/rooms";
 import { motion } from "framer-motion";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const roomOptions = rooms.map((room) => ({
-  value: room.name,
-  label: `${room.name} - ৳${room.price} - ${room.type}`,
-  price: room.price,
-}));
 
-export default function BookNow() {
+export default function BookNow({roomdata}) {
   const [checkPrice, setChcekPrice] = useState(false)
   const { step, setStep } = useStep();
   const [checkinDate, setCheckinDate] = useState(null);
@@ -37,6 +32,7 @@ export default function BookNow() {
     watch,
     trigger,
     getValues,
+    setValue,
     reset,
     formState: { errors },
   } = useForm({
@@ -44,9 +40,59 @@ export default function BookNow() {
       rooms: [],
     },
   });
+  // ✅ Normalize both date arrays before comparing
+  const normalizeDate = (date) => new Date(date).toISOString().split("T")[0];
   const selectedMethod = watch("paymentMethod");
+  const [SelectIn, SelectOut] = watch(["checkin", "checkout"]);
   const selectedRooms = watch("rooms");
-  const coupon = checkPrice && watch("coupon") === "ok" ? true : false;
+  const dateArr = generateDateRange(SelectIn, SelectOut).map(normalizeDate); // Ensures format
+  
+  // Step 2: Define room filter logic
+  const isRoomAvailable = (room) => {
+    const bookedDates = (room.bookedDate || []).map(normalizeDate); // Normalize booked dates
+    return !dateArr.some(date => bookedDates.includes(date)); // No overlap allowed
+  };
+  
+  // Step 3: Apply filter and create room options
+  const roomOptions = roomdata
+  .filter(isRoomAvailable)
+  .map(room => ({
+    id: room._id,
+    value: room.name,
+    label: `${room.name} - ৳${room.price} - ${room.type}`,
+    price: room.price,
+  }));
+  
+  
+  // Calculate amounts when rooms or coupon change
+  // inside your component
+ const couponCode = checkPrice && watch("coupon")?.toUpperCase();
+const isCouponValid = couponCode === "DISCOUNT10";
+
+useEffect(() => {
+  // Sum of room prices
+  const total = selectedRooms.reduce((sum, room) => sum + (room.price || 0), 0);
+
+  // Discount if coupon matches
+  const discount = isCouponValid ? 1000 : 0;
+
+  // Calculate total for number of days
+  const daysCount = dateArr.length || 1; // fallback to 1 if empty
+
+  // Calculate final after discount
+  const final = total * daysCount - discount;
+
+  setValue("totalAmount", total * daysCount);
+  setValue("finalAmount", final > 0 ? final : 0);
+  setValue("couponDiscount", discount);
+}, [selectedRooms, isCouponValid, dateArr.length, setValue]);
+
+
+const totalAmount = watch("totalAmount") || 0;
+const finalAmount = watch("finalAmount") || 0;
+const couponDiscount = watch("couponDiscount") || 0;
+
+
   const onSubmit = async (data) => {
     console.log(data);
     await SubmitBooking(data);
@@ -206,8 +252,9 @@ export default function BookNow() {
           </label>
         </div>
         <h2 className="text-xl font-semibold text-center">Select Your Rooms</h2>
+        {!SelectIn && !SelectOut && <h4 className="text-amber-300 text-center">Give Checkin & Checkout Date to Select rooms</h4> }
         {/* Display selected rooms */}
-        <Controller
+        {SelectIn &&- SelectOut && <Controller
           name="rooms"
           control={control}
           rules={{ required: "Please select at least one room" }}
@@ -240,7 +287,7 @@ export default function BookNow() {
               />
             </>
           )}
-        />
+        />}
         {errors.rooms && (
           <motion.p className="text-red-400 text-sm"
             initial={{ y: -10, opacity: 0 }}
@@ -273,54 +320,61 @@ export default function BookNow() {
           </div>
           <button onClick={() => { setChcekPrice(true) }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6" type="button">Check Price</button>
         </div>
-        <div className="text-white bg-emerald-800 p-4 rounded-2xl inset-shadow-sm inset-shadow-emerald-950 w-5/6 text-center">
-          <h6 className="font-semibold">Price estimate</h6>
-          {selectedRooms && selectedRooms.length > 0 && (<>
-            <div className="flex justify-between items-center w-full gap-2">
-              <section className="flex flex-col items-center">
-                {selectedRooms.map((room, index) => (
-                  <motion.span className="px-3 py-1 rounded-full text-sm"
-                    key={room.value}
-                    initial={{ x: 10, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{
-                      duration: 0.3,
-                      type: "spring",
-                      stiffness: 300,
-                    }}>
-                    {room.value}
-                  </motion.span>
-                ))}
-              </section>
-              <section className="flex flex-col items-center">
-                {selectedRooms.map((room, index) => (
-                  <p key={index}>{room.price}/=</p>
-                ))}
-              </section>
-            </div>
+<div className="text-white bg-emerald-800 p-4 rounded-2xl inset-shadow-sm inset-shadow-emerald-950 w-5/6 text-center">
+  <h6 className="font-semibold">Price estimate</h6>
+  {selectedRooms && selectedRooms.length > 0 && (
+    <>
+      <div className="flex justify-between items-center w-full gap-2">
+        <section className="flex flex-col items-center">
+          {selectedRooms.map((room, index) => (
+            <motion.span
+              className="px-3 py-1 rounded-full text-sm"
+              key={room.value}
+              initial={{ x: 10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                duration: 0.3,
+                type: "spring",
+                stiffness: 300,
+              }}
+            >
+              {room.value}
+            </motion.span>
+          ))}
+        </section>
+        <section className="flex flex-col items-center">
+          {selectedRooms.map((room, index) => (
+            <p key={index}>{room.price}/=</p>
+          ))}
+        </section>
+      </div>
 
-            <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
-            <section>
-              {coupon &&
-                <div>
-                  <div className="flex items-center justify-between">
-                    <p>Total Amount</p>
-                    <p>2000/=</p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p>Coupon</p>
-                    <p>2000/=</p>
-                  </div>
-                  <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
-                </div>}
-              <div className="flex items-center justify-between">
-                <p>Final Amount</p>
-                <p>2000/=</p>
-              </div>
-            </section>
-          </>
-          )}
+      <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
+
+      <section>
+        {isCouponValid && (
+  <div>
+    <div className="flex items-center justify-between">
+      <p>Total Amount</p>
+      <p>{totalAmount}/=</p>
+    </div>
+    <div className="flex items-center justify-between">
+      <p>Coupon</p>
+      <p>{couponDiscount}/=</p>
+    </div>
+    <span className="inline-block w-full h-0.5 rounded-2xl bg-amber-50"></span>
+  </div>
+)}
+
+        <div className="flex items-center justify-between">
+          <p>Final Amount</p>
+          <p>{finalAmount}/=</p>
         </div>
+      </section>
+    </>
+  )}
+</div>
+
         <div className="flex items-center justify-center w-full">
           <button onClick={() => { setStep(step - 1) }} className="bg-emerald-700 text-white font-bold px-9 py-3 cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300 rounded-lg m-6 flex gap-1"><Image src="/leftarrow.svg" className="dark:invert" width={14} height={14} alt="i" />Go Back</button>
           <button onClick={async () => {
@@ -402,8 +456,9 @@ export default function BookNow() {
             </div>
           )}
           <p className="p-6 text-center text-gray-400">
-            <b className="text-white">Note:</b> Send 40% of the estimated price to the number above and write the Transaction ID in the TrxID field. You’ll receive confirmation shortly.
+            <b className="text-white underline">Note:</b> Send 40% of the estimated price <b className="text-amber-200 text-lg">( {(finalAmount * 0.4).toFixed(0)}৳ )</b> to the number above and write the Transaction ID in the TrxID field. You’ll receive confirmation shortly.
           </p>
+          <p className="text-center font-bold text-md">Must bring your NID copy</p>
 
           {/* Navigation Buttons */}
           <div className="flex items-center justify-center w-full">

@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import CencelBookBtn from "./CencelBookBtn";
 import ConfirmBookBtn from "./ConfirmBookBtn"
+import { usePathname } from "next/navigation";
 
 export default function BookingSidebar({ bookingDocs }) {
+  const pathname = usePathname();
   const { register, watch } = useForm();
   const searchQuery = watch("search") || "";
 
@@ -16,10 +18,8 @@ export default function BookingSidebar({ bookingDocs }) {
   );
 
   return (
-    <aside className="flex flex-col gap-4 h-screen overflow-y-auto custom-scrollbar pr-4">
-
-      {/* Search bar */}
-      <form className="flex items-center justify-center my-2 w-full">
+    <section>
+      <form className="flex items-center justify-center my-4 w-full">
         <input
           type="text"
           {...register("search")}
@@ -27,6 +27,9 @@ export default function BookingSidebar({ bookingDocs }) {
           className="w-11/12 px-4 py-2 rounded-xl text-black bg-white placeholder:text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </form>
+    <aside className={`grid gap-4 ${ pathname === "/cage/orders" ? "custom-scrollbar h-screen overflow-y-auto pr-4 grid-cols-1" : "grid-cols-2" }`}>
+
+      {/* Search bar */}
 
       {/* Filtered list */}
       {filteredDocs.map((it) => (
@@ -53,12 +56,14 @@ export default function BookingSidebar({ bookingDocs }) {
             <p className="text-amber-200">{it.bookingStatus}</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-4">
-            <ConfirmBookBtn id={it._id} newStatus="completed" />
             <CencelBookBtn id={it._id.toString()} />
-            <ConfirmBookBtn id={it._id} newStatus="cancelled" />
+            <ConfirmBookBtn id={it._id} newStatus="Cancelled" />
+            <ConfirmBookBtn id={it._id} newStatus="Completed" />
+            <ConfirmBookBtn id={it._id} newStatus="Paid" />
           </div>
         </span>
       ))}
     </aside>
+    </section>
   );
 }

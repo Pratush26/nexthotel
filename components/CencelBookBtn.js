@@ -17,7 +17,7 @@ export default function CencelBookBtn({ id }) {
 
   return (
     <button onClick={onDelete} className="text-pink-800 cursor-pointer hover:underline text-wrap text-center">
-      Cencel Booking
+      Delete Booking
     </button>
   );
 }

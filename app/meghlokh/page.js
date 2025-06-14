@@ -14,7 +14,7 @@ export default async function Meghlokh() {
 
             </section>
             <section className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/orders"}>Check Bookings</Link>
+                <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/check-bookings"}>Check Bookings</Link>
                 <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/orders"}>Handle Bookings</Link>
                 {session?.user.role === "admin" &&
                 <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/register"}>Register New User</Link>

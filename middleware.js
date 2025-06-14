@@ -5,6 +5,8 @@ const validCageRoutes = [
   '/cage',
   '/cage/orders',
   '/cage/register',
+  '/cage/book',
+  '/cage/check-bookings',
   // Add more valid routes if needed
 ];
 
