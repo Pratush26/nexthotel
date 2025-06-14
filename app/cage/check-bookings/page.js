@@ -45,8 +45,8 @@ export default async function Explore({ searchParams }) {
                 key={label}
                 href={href}
                 className={`px-4 py-2 rounded-full text-sm sm:text-base transition-all duration-300 hover:scale-105 ${isActive
-                    ? "bg-emerald-800 text-white border-emerald-700"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-400"
+                  ? "bg-emerald-800 text-white border-emerald-700"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-400"
                   }`}
               >
                 {label}
@@ -55,15 +55,13 @@ export default async function Explore({ searchParams }) {
           })}
         </span>
       </div>
-      <div className="grid grid-cols-1 justify-center items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6">
-        {filteredRooms.map((room, index) => (
-          <div className="flex flex-col justify-center items-center gap-2 hover:border-1 hover:shadow-none border-gray-300 rounded-lg p-4 w-full shadow-gray-50/60 shadow-[0_1px_8px_rgba(0,0,0,0.3)] transition-all duration-300">
-            <h1 className="text-xl text-shadow-lg text-shadow-black">{room.name}</h1>
-            <h5 className="text-sm font-bold">{room.type}</h5>
-            <h5 className="text-sm text-emerald-200 font-bold">{room.price}/=</h5>
-          </div>
-        ))}
-      </div>
+      {filteredRooms.map((room) => (
+        <div key={room._id} className="flex flex-col justify-center items-center gap-2 hover:border-1 hover:shadow-none border-gray-300 rounded-lg p-4 w-full shadow-gray-50/60 shadow-[0_1px_8px_rgba(0,0,0,0.3)] transition-all duration-300">
+          <h1 className="text-xl text-shadow-lg text-shadow-black">{room.name}</h1>
+          <h5 className="text-sm font-bold">{room.type}</h5>
+          <h5 className="text-sm text-emerald-200 font-bold">{room.price}/=</h5>
+        </div>
+      ))}
     </main>
   );
 }
