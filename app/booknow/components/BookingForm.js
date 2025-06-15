@@ -85,6 +85,9 @@ useEffect(() => {
   setValue("totalAmount", total * daysCount);
   setValue("finalAmount", final > 0 ? final : 0);
   setValue("couponDiscount", discount);
+  setValue("coupon", couponCode);
+  setValue("bookedBy", "user");
+  setValue("bookingStatus", "Pending");
 }, [selectedRooms, isCouponValid, dateArr.length, setValue]);
 
 
@@ -458,7 +461,7 @@ const couponDiscount = watch("couponDiscount") || 0;
           <p className="p-6 text-center text-gray-400">
             <b className="text-white underline">Note:</b> Send 40% of the estimated price <b className="text-amber-200 text-lg">( {(finalAmount * 0.4).toFixed(0)}৳ )</b> to the number above and write the Transaction ID in the TrxID field. You’ll receive confirmation shortly.
           </p>
-          <p className="text-center font-bold text-md">Must bring your NID copy</p>
+          <p className="text-center font-bold text-md">Must bring your NID copies</p>
 
           {/* Navigation Buttons */}
           <div className="flex items-center justify-center w-full">

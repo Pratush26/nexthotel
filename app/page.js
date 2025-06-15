@@ -1,11 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import { connectDB } from "@/lib/mongoose";
+import Img from "@/models/Img";
 import Gallary from "@/components/Gallary";
+import Announcement from "@/components/Announcement";
 
-export default function Home() {
+export default async function Home() {
+  let imgs = [];
+    try {
+      await connectDB();
+      const rawDocs = await Img.find().sort({ _id: -1 }).lean();
+
+    imgs = rawDocs.map(doc => ({
+      ...doc,
+      _id: doc._id.toString(),
+      createdAt: doc.createdAt.toISOString(),
+      updatedAt: doc.updatedAt.toISOString()
+    }));
+  } catch (error) {
+    console.log(error);
+  }
   return (
     <main>
+      <Announcement />
       <div className="w-full h-screen absolute top-0 left-0 -z-10">
         <Suspense fallback={<div className="w-full h-screen bg-emerald-950"></div>}>
         <Image src="https://images.pexels.com/photos/939715/pexels-photo-939715.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Picture of the author" fill={true} className="object-cover grayscale-25 contrast-100 saturate-100 brightness-60" />
@@ -25,8 +43,7 @@ export default function Home() {
         <div className="flex justify-center items-center m-20">
         <Link href="/booknow" className="bg-emerald-400 animate-bounce text-emerald-950 px-10 py-5 rounded-2xl text-xl text-center font-bold shadow-black shadow-2xl hover:bg-emerald-600 hover:scale-110 hover:text-gray-300 transition-all duration-400">Your relaxing escape awaits | reserve today</Link>
         </div>
-        <Gallary />
-        <h1 className="text-4xl text-center font-bold underline">Notices</h1>
+        <Gallary li={imgs.map(doc => doc.link)}/>
         <p className="text-center">
           &copy; 2025 Bandarban. All rights reserved.
         </p>

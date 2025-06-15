@@ -12,10 +12,11 @@ export default function BookingSidebar({ bookingDocs }) {
 
   // Filter logic (by name, email, phone)
   const filteredDocs = bookingDocs.filter((it) =>
-    [it.name, it.email, it.phone, it.trxId].some((field) =>
-      field.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+  [it.name, it.email, it.phone, it.trxId].some((field) =>
+    String(field || "").toLowerCase().includes(searchQuery.toLowerCase())
+  )
+);
+
 
   return (
     <section>

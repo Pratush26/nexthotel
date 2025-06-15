@@ -9,11 +9,12 @@ const BookingSchema = new mongoose.Schema({
     checkOutDate: { type: Date },
     couponCode: { type: String },
     totalAmount: { type: Number },
+    couponDiscount: { type: String },
     finalAmount: { type: Number },
     roomNo: [{ type: String }, { required: true }],
-    trxId: { type: String, required: true }, // Add if you're expecting this field
+    trxId: { type: String }, // Add if you're expecting this field
     bookedBy: { type: String, default: "user"},
-    paymentMethod: { type: String, enum: ["bkash", "nagad", "rocket"], required: true },
+    paymentMethod: { type: String, enum: ["bkash", "nagad", "rocket", "handy"], required: true },
     bookingStatus: { type: String, enum: ["Pending", "Confirmed", "Cancelled", "Paid"], default: "Pending" },
 }, { timestamps: true });
 

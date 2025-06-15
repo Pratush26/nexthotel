@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { DeleteBooking } from "@/app/actions/DeleteBooking";
+import { DeleteBooking } from "@/app/actions/BtnFunction";
 
 export default function DeleteBookBtn({ id }) {
   const router = useRouter();

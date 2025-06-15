@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import { ConfirmBooking } from "@/app/actions/ConfirmBooking"
+import { ConfirmBooking } from "@/app/actions/BtnFunction"
 
 export default function UpdateStatusBtn({ id, newStatus = "confirmed" }) {
   const router = useRouter();

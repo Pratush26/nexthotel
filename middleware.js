@@ -7,6 +7,7 @@ const validCageRoutes = [
   '/cage/register',
   '/cage/book',
   '/cage/check-bookings',
+  '/cage/notice-img',
   // Add more valid routes if needed
 ];
 

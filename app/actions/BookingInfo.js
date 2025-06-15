@@ -13,12 +13,14 @@ export default async function submitBooking(data) {
     checkin,
     checkout,
     coupon,
-    paymentMethod,
-    trxId,
-    rooms,
     totalAmount,
     couponDiscount,
     finalAmount,
+    rooms,
+    trxId,
+    bookedBy,
+    paymentMethod,
+    bookingStatus
   } = data;
 
   try {
@@ -34,13 +36,15 @@ export default async function submitBooking(data) {
       phone,
       checkInDate: new Date(checkin),
       checkOutDate: new Date(checkout),
-      couponCode: coupon,
-      paymentMethod,
-      trxId,
-      roomNo: rooms.map((r) => r.value),
+      couponCode: coupon || null,
       totalAmount,
       couponDiscount,
       finalAmount,
+      roomNo: rooms.map((r) => r.value),
+      trxId,
+      bookedBy,
+      paymentMethod,
+      bookingStatus
     });
 
     // Save booking first

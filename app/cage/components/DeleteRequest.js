@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { handleDelete } from "@/app/actions/HandleDeleteRequest";
+import { handleDelete } from "@/app/actions/BtnFunction";
 
 export default function DeleteRequestBtn({ id }) {
   const router = useRouter();
