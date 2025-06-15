@@ -1,7 +1,7 @@
 "use client"
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import CencelBookBtn from "./CencelBookBtn";
+import DeleteBookBtn from "./DeleteBookBtn";
 import ConfirmBookBtn from "./ConfirmBookBtn"
 import { usePathname } from "next/navigation";
 
@@ -56,7 +56,7 @@ export default function BookingSidebar({ bookingDocs }) {
             <p className="text-amber-200">{it.bookingStatus}</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-4">
-            <CencelBookBtn id={it._id.toString()} />
+            <DeleteBookBtn id={it._id.toString()} />
             <ConfirmBookBtn id={it._id} newStatus="Cancelled" />
             <ConfirmBookBtn id={it._id} newStatus="Completed" />
             <ConfirmBookBtn id={it._id} newStatus="Paid" />

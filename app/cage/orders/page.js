@@ -10,6 +10,16 @@ export default async function Bookings() {
 
   try {
     await connectDB();
+
+    // 🧹 Delete bookings older than 2 months
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+
+    await Booking.deleteMany({
+      updatedAt: { $lt: twoMonthsAgo }
+    });
+
+    // ✅ Now fetch fresh data
     const rawDocs = await BookingRequest.find().sort({ createdAt: -1 }).lean();
     const rowDocs = await Booking.find().sort({ createdAt: -1 }).lean();
 
@@ -20,6 +30,7 @@ export default async function Bookings() {
       createdAt: doc.createdAt?.toISOString(),
       updatedAt: doc.updatedAt?.toISOString(),
     }));
+
     bookingDocs = rowDocs.map(doc => ({
       ...doc,
       _id: doc._id.toString(),
@@ -37,7 +48,7 @@ export default async function Bookings() {
         <h2 className="font-bold text-2xl text-center">Booking Requests</h2>
         <h2 className="font-bold text-2xl text-center">Pending Bookings</h2>
 
-        {/* Searchable, scrollable list */}
+        {/* Booking Requests */}
         <aside className="flex flex-col gap-4 h-screen overflow-y-auto custom-scrollbar pr-4">
           {bookingReqDocs.map((it) => (
             <span
@@ -53,10 +64,10 @@ export default async function Bookings() {
             </span>
           ))}
         </aside>
-        {/* Pass cleaned data to another Client Component */}
+
+        {/* Pending Bookings */}
         <PendingBookings bookingDocs={bookingDocs} />
       </div>
     </main>
   );
 }
-
