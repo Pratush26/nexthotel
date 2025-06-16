@@ -14,11 +14,11 @@ const validCageRoutes = [
 export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
   
-  const token = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET,
-  });
-  
+  // const token = await getToken({
+  //   req,
+  //   secret: process.env.AUTH_SECRET,
+  // });
+  const token = req.cookies.get("authjs.session-token")
 console.log("🔐 Token in middleware:", token);
   // Skip if it's not a /cage route
   if (!pathname.startsWith('/cage')) {
