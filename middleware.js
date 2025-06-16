@@ -13,16 +13,18 @@ const validCageRoutes = [
 
 export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
-
+  
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+  });
+  
+console.log("🔐 Token in middleware:", token);
   // Skip if it's not a /cage route
   if (!pathname.startsWith('/cage')) {
     return NextResponse.next();
   }
 
-  const token = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET,
-  });
 
   if (!token) {
     // Show not found page instead of redirecting to login
