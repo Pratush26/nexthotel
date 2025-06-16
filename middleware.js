@@ -18,7 +18,7 @@ export async function middleware(req) {
   //   req,
   //   secret: process.env.AUTH_SECRET,
   // });
-  const token = req.cookies.get("authjs.session-token")
+  const token = req.cookies.get("__Secure-authjs.session-token")
 console.log("🔐 Token in middleware:", token);
   // Skip if it's not a /cage route
   if (!pathname.startsWith('/cage')) {
