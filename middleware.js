@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
 
 const validCageRoutes = [
   '/cage',
@@ -14,12 +13,7 @@ const validCageRoutes = [
 export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
   
-  const token = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET,
-  });
-  // const token = req.cookies.get("__Secure-authjs.session-token")
-console.log("🔐 Token in middleware:", token);
+  const token = req.cookies.get("__Secure-authjs.session-token") || req.cookies.get("authjs.session-token")
   // Skip if it's not a /cage route
   if (!pathname.startsWith('/cage')) {
     return NextResponse.next();

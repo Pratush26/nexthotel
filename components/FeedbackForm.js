@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { motion } from "motion/react";
+import { motion, spring } from "motion/react";
 import ComplaintSub from "@/app/actions/ComplaintSubmission";
 import FeedbackSub from "@/app/actions/FeedbackSubmission";
 
@@ -58,10 +58,14 @@ export default function FeedbackForm() {
             {type.charAt(0).toUpperCase() + type.slice(1)}
             {activeForm === type && (
               <motion.span
-                layoutId="underline"
-                className="absolute left-0 -bottom-0.5 h-0.5 bg-white w-full"
-                transition={{ duration: 0.3 }}
+                className="absolute left-0 bottom-0 h-0.5 bg-white w-full"
+                initial={{ x: type === "complaint" ? 100 : -100 }}
+                animate={{ x: 0 }}
+                transition={{ duration: 0.5,
+                  type:spring,
+                 }}
               />
+
             )}
           </button>
         ))}
