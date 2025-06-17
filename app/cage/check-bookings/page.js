@@ -5,7 +5,7 @@ import RoomModel from "@/models/Room";
 import generateDateRange from "@/app/actions/DateArr";
 import FilterRoomBookings from "@/app/cage/components/Filter";
 
-export default async function Explore({ searchParams }) {
+export default async function Explore({ searchParams = {} }) {
   let rooms = [];
 try {
   await connectDB();
