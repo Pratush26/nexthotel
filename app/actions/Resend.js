@@ -13,6 +13,7 @@ export async function SuccessEmail(info) {
             to: [email],
             subject: 'Booking Confirmation',
             react: <EmailTemplate data={{ name, roomNo }} />, // Correct JSX usage
+            text: `Hi ${name},\nYour booking at Meghlokh Resort of room(s) ${roomNo.join(", ")} is confirmed.\nThank you for choosing our service.`,
         });
 
         if (error) {

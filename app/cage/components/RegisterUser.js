@@ -1,19 +1,41 @@
-'use client';
+"use client";
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { registerUser } from "@/app/actions/RegisterUser";
+import { motion } from "framer-motion";
 
 export default function RegisterForm() {
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
   const [result, setResult] = useState(null);
 
   const onSubmit = async (data) => {
     const res = await registerUser(data);
     setResult(res);
-    console.log(data)
     if (res.success) reset();
   };
+
+  const renderError = (field) =>
+    errors[field] && (
+      <motion.p
+        className="text-pink-700 text-sm mb-1"
+        initial={{ y: 10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          duration: 0.3,
+          type: "spring",
+          stiffness: 300,
+        }}
+      >
+        {errors[field]?.message || `${field} is required`}
+      </motion.p>
+    );
 
   return (
     <form
@@ -29,37 +51,57 @@ export default function RegisterForm() {
         </p>
       )}
 
-      <input
-        {...register("name")}
-        placeholder="Name"
-        className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
-      />
-      <input
-        {...register("email")}
-        type="email"
-        placeholder="Email"
-        className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
-      />
-      <input
-        {...register("password")}
-        type="password"
-        placeholder="Password"
-        className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
-      />
-      <input
-        {...register("phone")}
-        type="number"
-        placeholder="Phone Number"
-        className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
-      />
-      <input
-        {...register("nid")}
-        type="number"
-        placeholder="NID Number"
-        className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
-      />
+      <div className="w-full">
+        {renderError("name")}
+        <input
+          {...register("name", { required: "Name is required" })}
+          placeholder="Name"
+          className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
+        />
+      </div>
 
       <div className="w-full">
+        {renderError("email")}
+        <input
+          {...register("email", { required: "Email is required" })}
+          type="email"
+          placeholder="Email"
+          className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
+        />
+      </div>
+
+      <div className="w-full">
+        {renderError("password")}
+        <input
+          {...register("password", { required: "Password is required" })}
+          type="password"
+          placeholder="Password"
+          className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
+        />
+      </div>
+
+      <div className="w-full">
+        {renderError("phone")}
+        <input
+          {...register("phone", { required: "Phone number is required" })}
+          type="number"
+          placeholder="Phone Number"
+          className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
+        />
+      </div>
+
+      <div className="w-full">
+        {renderError("nid")}
+        <input
+          {...register("nid", { required: "NID number is required" })}
+          type="number"
+          placeholder="NID Number"
+          className="bg-white placeholder:text-gray-500 w-full border px-3 py-2 rounded"
+        />
+      </div>
+
+      <div className="w-full">
+        {renderError("role")}
         <label className="block mb-2 text-white font-semibold">Select Role:</label>
         <div className="flex gap-6 text-white">
           <label>
@@ -92,12 +134,12 @@ export default function RegisterForm() {
         </div>
       </div>
 
-
       <button
         type="submit"
-        className="w-3/4 font-bold bg-emerald-700 text-white py-2 rounded-lg hover:bg-emerald-800 hover:scale-105 transition-all duration-300"
+        disabled={isSubmitting}
+        className="w-3/4 font-bold disabled:bg-gray-700 bg-emerald-700 text-white py-2 rounded-lg cursor-pointer hover:bg-emerald-800 hover:scale-105 transition-all duration-300"
       >
-        Register
+        {isSubmitting ? "Registering..." : "Register"}
       </button>
     </form>
   );
