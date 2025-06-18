@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ConfirmBooking } from "@/app/actions/BtnFunction"
 
-export default function UpdateStatusBtn({ id, newStatus = "confirmed" }) {
+export default function UpdateStatusBtn({ id, newStatus = "Confirmed" }) {
   const router = useRouter();
 
   async function handleUpdate() {

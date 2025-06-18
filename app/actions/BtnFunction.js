@@ -3,6 +3,7 @@
 import { connectDB } from "@/lib/mongoose";
 import Booking from "@/models/Booking";
 import BookingRequest from "@/models/BookingRequest";
+import { SuccessEmail } from "./Resend";
 
 export async function handleDelete(id) {
   await connectDB();
@@ -17,7 +18,22 @@ export async function DeleteBooking(id) {
 export async function ConfirmBooking(id, newStatus) {
   try {
     await connectDB();
-    await Booking.findByIdAndUpdate(id, { bookingStatus: newStatus });
+
+    const booking = await Booking.findByIdAndUpdate(id, { bookingStatus: newStatus }, { new: true });
+
+    if (!booking) {
+      throw new Error("Booking not found");
+    }
+
+    if(newStatus === "Confirmed"){
+      const info = {
+        name: booking.name,
+        email: booking.email,
+        roomNo: booking.roomNo,
+      };
+      
+      await SuccessEmail(info);
+    }
   } catch (error) {
     console.error("Update booking status failed:", error);
     throw error;

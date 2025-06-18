@@ -59,7 +59,7 @@ export default function BookingSidebar({ bookingDocs }) {
           <div className="flex flex-col items-center justify-center gap-4">
             <DeleteBookBtn id={it._id.toString()} />
             <ConfirmBookBtn id={it._id} newStatus="Cancelled" />
-            <ConfirmBookBtn id={it._id} newStatus="Completed" />
+            <ConfirmBookBtn id={it._id} newStatus="Confirmed" />
             <ConfirmBookBtn id={it._id} newStatus="Paid" />
           </div>
         </span>
