@@ -9,7 +9,7 @@ export async function SuccessEmail(info) {
         const { name, email, roomNo } = info;
 
         const { data, error } = await resend.emails.send({
-            from: 'Meghlokh Resort <booking@meghlokhresort.com>',
+            from: 'Meghlokh Resort <onboarding@resend.dev>',
             to: [email],
             subject: 'Booking Confirmation',
             react: <EmailTemplate data={{ name, roomNo }} />, // Correct JSX usage
