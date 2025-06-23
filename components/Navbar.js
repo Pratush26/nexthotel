@@ -8,7 +8,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justify-between items-center py-4 px-10 font-semibold">
+    <nav className="flex justify-between items-center py-4 px-2 sm:px-10 font-semibold">
       <Link href="/" className="flex justify-center items-center">
         <Image src="/hotel.svg" alt="Logo" width={40} height={40} className="dark:invert hover:invert-75" />
       </Link>

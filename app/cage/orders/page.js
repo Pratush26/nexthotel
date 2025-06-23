@@ -2,7 +2,6 @@ import { connectDB } from "@/lib/mongoose";
 import BookingRequest from "@/models/BookingRequest";
 import DeleteRequestBtn from "@/app/cage/components/DeleteRequest";
 import PendingBookings from "@/app/cage/components/PendingBookings";
-import Link from "next/link";
 import Booking from "@/models/Booking";
 
 export default async function Bookings() {
@@ -45,7 +44,6 @@ export default async function Bookings() {
   return (
     <main className="flex justify-center items-center min-h-screen flex-col p-4">
       <h1 className="font-bold text-4xl text-center m-6 text-gray-700">All Booking Request</h1>
-      <Link href={"/meghlokh"}>Home</Link>
       <div className="grid grid-cols-2 w-full gap-8">
         <h2 className="font-bold text-2xl text-center">Booking Requests</h2>
         <h2 className="font-bold text-2xl text-center">Pending Bookings</h2>

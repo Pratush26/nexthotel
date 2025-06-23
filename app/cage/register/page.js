@@ -1,7 +1,6 @@
 import RegisterForm from "@/app/cage/components/RegisterUser";
 import { auth } from "@/lib/auth"; // your NextAuth config
 import { redirect } from "next/navigation";
-import Link from "next/link";
 
 export default async function RegisterPage() {
   const session = await auth();
@@ -11,7 +10,6 @@ export default async function RegisterPage() {
   
   return (
     <main>
-      <Link href={"/meghlokh"} className="flex items-center justify-center">Home</Link>
       <h1 className="text-3xl font-bold m-4 text-center">Register New User</h1>
       <RegisterForm />
     </main>

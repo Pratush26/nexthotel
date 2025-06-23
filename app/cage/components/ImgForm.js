@@ -45,7 +45,7 @@ export default function AddImageForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center items-center gap-6 bg-emerald-950 p-10 rounded-lg w-1/3 mx-auto text-black"
+      className="flex flex-col justify-center items-center gap-6 bg-emerald-950 p-10 rounded-lg w-2/3 mx-auto text-black"
     >
       {result && (
         <p className={`text-center ${result.success ? "text-green-500" : "text-red-600"}`}>

@@ -31,7 +31,7 @@ export default function AddAnnouncementForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col justify-center gap-6 bg-emerald-900 p-10 rounded-lg w-1/3 mx-auto text-black"
+            className="flex flex-col justify-center gap-6 bg-emerald-900 p-10 rounded-lg w-2/3 mx-auto text-black"
         >
             <h2 className="text-xl text-white font-bold">Add New Announcement</h2>
 

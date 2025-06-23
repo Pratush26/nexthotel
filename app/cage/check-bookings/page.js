@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/mongoose";
-import Link from "next/link";
 import RoomModel from "@/models/Room";
 import generateDateRange from "@/app/actions/DateArr";
 import FilterRoomBookings from "@/app/cage/components/Filter";
@@ -53,7 +52,6 @@ try {
 
   return (
     <main className="flex flex-col justify-center items-center">
-      <Link href={"/meghlokh"}>Home</Link>
       <h1 className="text-4xl m-6 font-bold">Check bookings</h1>
       <FilterRoomBookings
         filters={filters}

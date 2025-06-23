@@ -12,7 +12,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-export default function BookNow({roomdata}) {
+export default function BookNow({roomdata, coupons}) {
   const [checkPrice, setChcekPrice] = useState(false)
   const { step, setStep } = useStep();
   const [checkinDate, setCheckinDate] = useState(null);
@@ -66,20 +66,36 @@ export default function BookNow({roomdata}) {
   
   // Calculate amounts when rooms or coupon change
   // inside your component
- const couponCode = checkPrice && watch("coupon")?.toUpperCase();
-const isCouponValid = couponCode === "DISCOUNT10";
+const couponCode = checkPrice && watch("coupon")?.trim();
+
+const matchedCoupon = coupons.find(
+  (c) => c.coupon.trim() === couponCode
+);
+// Validate coupon presence
+const isCouponValid = Boolean(matchedCoupon);
+
+// Parse discount:
+// if discount ends with %, treat as percentage; else fixed amount
+function parseDiscount(discountStr, total) {
+  if (!discountStr) return 0;
+  discountStr = discountStr.trim();
+  if (discountStr.endsWith("%")) {
+    const perc = parseFloat(discountStr.slice(0, -1));
+    if (isNaN(perc)) return 0;
+    return (total * perc) / 100;
+  } else {
+    const fixed = parseFloat(discountStr);
+    return isNaN(fixed) ? 0 : fixed;
+  }
+}
 
 useEffect(() => {
-  // Sum of room prices
   const total = selectedRooms.reduce((sum, room) => sum + (room.price || 0), 0);
+  const daysCount = dateArr.length || 1;
 
-  // Discount if coupon matches
-  const discount = isCouponValid ? 1000 : 0;
+  // Calculate discount from matched coupon or 0
+  const discount = isCouponValid ? parseDiscount(matchedCoupon.discount, total * daysCount) : 0;
 
-  // Calculate total for number of days
-  const daysCount = dateArr.length || 1; // fallback to 1 if empty
-
-  // Calculate final after discount
   const final = total * daysCount - discount;
 
   setValue("totalAmount", total * daysCount);
@@ -88,7 +104,8 @@ useEffect(() => {
   setValue("coupon", couponCode);
   setValue("bookedBy", "user");
   setValue("bookingStatus", "Pending");
-}, [selectedRooms, isCouponValid, dateArr.length, setValue]);
+}, [selectedRooms, isCouponValid, couponCode, dateArr.length, setValue, matchedCoupon]);
+
 
 
 const totalAmount = watch("totalAmount") || 0;
