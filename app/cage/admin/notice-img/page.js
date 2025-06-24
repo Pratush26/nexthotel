@@ -1,19 +1,19 @@
 import { auth } from "@/lib/auth"; // your NextAuth config
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation"; // for showing 404 without redirecting
 import { connectDB } from "@/lib/mongoose";
 import Image from "next/image";
-import AddAnnouncementForm from "../components/AddNotice";
-import AddImageForm from "../components/ImgForm";
-import AddCouponCode from "../components/AddCoupon";
+import AddAnnouncementForm from "../../components/AddNotice";
+import AddImageForm from "../../components/ImgForm";
+import AddCouponCode from "../../components/AddCoupon";
 import Coupon from "@/models/Coupon";
 import Img from "@/models/Img";
 import Announcement from "@/models/Announcement";
-import DeleteButton from "../components/ManageDelete";
+import DeleteButton from "../../components/ManageDelete";
 
 export default async function FeaturePage() {
   const session = await auth();
   if (session?.user.role !== "admin") {
-    redirect("/not-found");
+    notFound(); // ✅ Show 404 without redirecting
   }
   let coupons = [];
   let images = [];

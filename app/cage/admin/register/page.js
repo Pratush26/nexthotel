@@ -1,12 +1,12 @@
 import RegisterForm from "@/app/cage/components/RegisterUser";
 import { auth } from "@/lib/auth"; // your NextAuth config
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation"; // for showing 404 without redirecting
 
 export default async function RegisterPage() {
   const session = await auth();
-  if(session?.user.role !== "admin"){
-    redirect("/not-found");
-  }
+  if (session?.user.role !== "admin") {
+      notFound(); // ✅ Show 404 without redirecting
+    }
   
   return (
     <main>
