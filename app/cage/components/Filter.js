@@ -145,6 +145,7 @@ export default function ExploreClient({ filters, filteredRooms, currentType }) {
                         <h1 className="text-xl text-shadow-lg text-shadow-black">{room.name}</h1>
                         <h5 className="text-sm font-bold">{room.type}</h5>
                         <h5 className="text-sm text-emerald-200 font-bold">{room.price}/=</h5>
+                        <Link href={`/cage/admin/rooms/edit/${encodeURIComponent(room.name)}`}>Edit</Link>
                         {room.bookedDate.map((d, i) => (
                             <p key={i}>{new Date(d).toLocaleDateString("en-GB")}</p>
                         ))}

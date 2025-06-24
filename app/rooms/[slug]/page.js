@@ -66,7 +66,8 @@ export default async function RoomDetail({ params }) {
           >
             Book Now
           </Link>
-          <p className="text-lg">{roomdata.price}৳ / night</p>
+          <p className={`text-lg ${roomdata.offprice && "line-through"}`}>{roomdata.price}৳ / night</p>
+          {roomdata.offprice && <p className="text-lg">{roomdata.offprice}৳ / night</p>}
         </div>
       </section>
     </main>
