@@ -1,27 +1,41 @@
-// middleware.js
 import { NextResponse } from 'next/server';
-import { authMiddleware } from "@/lib/auth-middleware";
 
-export const config = {
-  matcher: ['/cage/:path*', '/admin/:path*'],
-};
+const validCageRoutes = [
+  '/cage',
+  '/cage/orders',
+  '/cage/admin/register',
+  '/cage/book',
+  '/cage/check-bookings',
+  '/cage/admin/notice-img',
+  '/cage/admin/rooms',
+  '/cage/admin/rooms/edit/Jitesh-04',
+  // Add more valid routes if needed
+];
 
-export default async function middleware(req) {
-  const { auth } = await authMiddleware(req);
+export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
+  
+  const token = req.cookies.get("__Secure-authjs.session-token") || req.cookies.get("authjs.session-token")
+  // Skip if it's not a /cage route
+  if (!pathname.startsWith('/cage')) {
+    return NextResponse.next();
+  }
 
-  const isAuthenticated = !!auth;
-  const userRole = auth?.user?.role;
 
-  console.log('Middleware:', { pathname, isAuthenticated, userRole });
-
-  if (!isAuthenticated) {
+  if (!token) {
+    // Show not found page instead of redirecting to login
     return NextResponse.rewrite(new URL('/not-found', req.url));
   }
 
-  if ((pathname.startsWith('/cage/admin') || pathname.startsWith('/admin')) && userRole !== 'admin') {
-    return NextResponse.rewrite(new URL('/unauthorized', req.url));
+  // Optional strict route check
+  // Remove this check if you want to allow all /cage/* routes
+  if (!validCageRoutes.includes(pathname)) {
+    return NextResponse.rewrite(new URL('/not-found', req.url));
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ['/cage', '/cage/:path*'],
+};

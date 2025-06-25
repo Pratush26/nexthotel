@@ -20,6 +20,8 @@ export default async function Meghlokh() {
                 {session?.user.role === "admin" && <span className="flex flex-col gap-2">
                 <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/admin/register"}>Register New User</Link>
                 <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/admin/notice-img"}>Notice & Images</Link>
+                <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/admin/rooms"}>Rooms</Link>
+                <Link className="hover:text-gray-500 transition-all duration-200 transition-discrete" href={"/cage/admin/rooms/edit/Jitesh-04"}>Jitesh-04</Link>
                 </span>
                 }
                 <form
