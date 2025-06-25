@@ -3,11 +3,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { deleteRoom } from "@/app/actions/CreateRoom";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function ExploreClient({ filters, filteredRooms, currentType }) {
+export default function ExploreClient({ filters, filteredRooms, currentType, option }) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -145,7 +146,23 @@ export default function ExploreClient({ filters, filteredRooms, currentType }) {
                         <h1 className="text-xl text-shadow-lg text-shadow-black">{room.name}</h1>
                         <h5 className="text-sm font-bold">{room.type}</h5>
                         <h5 className="text-sm text-emerald-200 font-bold">{room.price}/=</h5>
-                        <Link href={`/cage/admin/rooms/edit/${encodeURIComponent(room.name)}`}>Edit</Link>
+                        {option && (<span className="flex w-full justify-evenly items-center">
+                            <Link href={`/cage/admin/rooms/edit/${encodeURIComponent(room.name)}`}>Edit</Link>
+                            <button
+                                onClick={async () => {
+                                    const result = await deleteRoom(room.name);
+                                    if (result.success) {
+                                        router.refresh();
+                                    } else {
+                                        alert(result.message);
+                                    }
+                                }}
+                                className="text-red-500 hover:text-red-700"
+                            >
+                                Delete
+                            </button>
+                            </span>
+                        )}
                         {room.bookedDate.map((d, i) => (
                             <p key={i}>{new Date(d).toLocaleDateString("en-GB")}</p>
                         ))}

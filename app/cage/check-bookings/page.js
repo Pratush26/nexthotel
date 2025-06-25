@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/mongoose";
+import { auth } from "@/lib/auth";
 import RoomModel from "@/models/Room";
 import generateDateRange from "@/app/actions/DateArr";
 import FilterRoomBookings from "@/app/cage/components/Filter";
 
 export default async function Explore({ searchParams = {} }) {
+  const session = await auth();
   let rooms = [];
 try {
   await connectDB();
@@ -57,6 +59,7 @@ try {
         filters={filters}
         filteredRooms={filteredRooms}
         currentType={type}
+        option={session?.user.role === "admin"}
       />
     </main>
   );

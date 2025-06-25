@@ -49,3 +49,18 @@ export async function createRoom(data) {
     return { success: false, message: 'Server error' };
   }
 }
+
+export async function deleteRoom(roomName) {
+  try {
+    await connectDB();
+
+    const result = await Room.deleteOne({ name: roomName });
+    if (result.deletedCount === 0) {
+      return { success: false, message: 'Room not found' };
+    }
+    return { success: true, message: 'Room deleted' };
+  } catch (error) {
+    console.error('[ROOM_DELETE_ERROR]', error);
+    return { success: false, message: 'Server error' };
+  }
+  }
