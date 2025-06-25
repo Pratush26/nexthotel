@@ -59,9 +59,10 @@ export default function BookNow({roomdata, coupons}) {
   .map(room => ({
     id: room._id,
     value: room.name,
-    label: `${room.name} - ৳${room.price} - ${room.type}`,
-    price: room.price,
+    label: `${room.name} - ৳${room.offprice || room.price} - ${room.type}`,
+    price: room.offprice || room.price, // fallback to regular price if no offprice
   }));
+
   
   
   // Calculate amounts when rooms or coupon change

@@ -28,7 +28,7 @@ export default async function Meghlokh() {
                         await signOut()
                     }}
                 >
-                    <button type="submit" className="hover:text-gray-500 transition-all duration-200 transition-discrete">Log Out</button>
+                    <button type="submit" className="hover:text-gray-500 transition-all duration-200 transition-discrete cursor-pointer">Log Out</button>
                 </form>
             </section>
         </main>
