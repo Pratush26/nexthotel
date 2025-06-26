@@ -39,3 +39,14 @@ export async function ConfirmBooking(id, newStatus) {
     throw error;
   }
 }
+
+export async function UpdateRecieved(formData) {
+  const id = formData.get("id");
+  const recieved = parseFloat(formData.get("recieved"));
+
+  if (isNaN(recieved)) throw new Error("Invalid value");
+
+  await connectDB();
+  await Booking.findByIdAndUpdate(id, { recieved }, { new: true });
+}
+

@@ -11,13 +11,13 @@ export default function generateDateRange(checkInStr, checkOutStr) {
   const dates = [];
 
   let current = new Date(checkIn.getTime());
-  console.log(checkIn, checkOut, current);
+  console.log('checkIN',checkIn,'checkout', checkOut,'check', current);
 
   while (current < checkOut) {
     dates.push(formatDateLocal(current));  // Use local date format here
     current.setDate(current.getDate() + 1);
   }
 
-  console.log(dates);
+  console.log('Dates',dates);
   return dates;
 }

@@ -105,6 +105,7 @@ useEffect(() => {
   setValue("coupon", couponCode);
   setValue("bookedBy", "user");
   setValue("bookingStatus", "Pending");
+  setValue("recieved", (final * 0.4).toFixed(0));
 }, [selectedRooms, isCouponValid, couponCode, dateArr.length, setValue, matchedCoupon]);
 
 

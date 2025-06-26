@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import ClientDetails from "@/app/actions/ClientDetails";
 import SubmitBooking from "@/app/actions/BookingInfo";
 import generateDateRange from "@/app/actions/DateArr";
 import Image from "next/image";
@@ -104,6 +103,7 @@ function parseDiscount(discountStr, total) {
     setValue("bookedBy", "employee");
     setValue("paymentMethod", "handy");
     setValue("bookingStatus", "Confirmed");
+    setValue("recieved", null);
   }, [selectedRooms, isCouponValid, couponCode, dateArr.length, setValue, matchedCoupon]);
 
 

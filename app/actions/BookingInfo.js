@@ -18,6 +18,7 @@ export default async function submitBooking(data) {
     finalAmount,
     rooms,
     trxId,
+    recieved,
     bookedBy,
     paymentMethod,
     bookingStatus
@@ -42,6 +43,7 @@ export default async function submitBooking(data) {
       finalAmount,
       roomNo: rooms.map((r) => r.value),
       trxId,
+      recieved,
       bookedBy,
       paymentMethod,
       bookingStatus
