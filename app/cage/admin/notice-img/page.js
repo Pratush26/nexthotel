@@ -1,14 +1,12 @@
 import { auth } from "@/lib/auth"; // your NextAuth config
 import { notFound } from "next/navigation"; // for showing 404 without redirecting
 import { connectDB } from "@/lib/mongoose";
-import Image from "next/image";
 import AddAnnouncementForm from "../../components/AddNotice";
-import AddImageForm from "../../components/ImgForm";
 import AddCouponCode from "../../components/AddCoupon";
 import Coupon from "@/models/Coupon";
-import Img from "@/models/Img";
 import Announcement from "@/models/Announcement";
 import DeleteButton from "../../components/ManageDelete";
+import CloudUploadButton from "../../components/CloudUploadBtn";
 
 export default async function FeaturePage() {
   const session = await auth();
@@ -16,12 +14,10 @@ export default async function FeaturePage() {
     notFound(); // ✅ Show 404 without redirecting
   }
   let coupons = [];
-  let images = [];
   let announcements = [];
   try {
     await connectDB();
     const couponsDb = await Coupon.find().sort({ _id: 1 }).lean();
-    const imagesDb = await Img.find().sort({ _id: 1 }).lean();
     const announcementsDb = await Announcement.find().sort({ _id: 1 }).lean();
 
     // Convert _id to string
@@ -30,12 +26,6 @@ export default async function FeaturePage() {
       _id: coupon._id.toString(),
       createdAt: coupon.createdAt?.toISOString().split("T")[0].split("-").reverse().join("-"),
       updatedAt: coupon.updatedAt?.toISOString(),
-    }));
-    images = imagesDb.map(image => ({
-      ...image,
-      _id: image._id.toString(),
-      createdAt: image.createdAt?.toISOString().split("T")[0].split("-").reverse().join("-"),
-      updatedAt: image.updatedAt?.toISOString(),
     }));
     announcements = announcementsDb.map(announcement => ({
       ...announcement,
@@ -69,31 +59,7 @@ export default async function FeaturePage() {
       </section>
       <h2 className="text-3xl font-bold m-4 text-center">Add images</h2>
       <section className="grid grid-cols-1 md:grid-cols-2 items-center justify-items-center gap-4">
-        <AddImageForm />
-        <div>
-          {images.length > 0 ? (
-            images.map((image) => (
-              <span className="bg-emerald-800 px-4 py-2 rounded flex items-center justify-center gap-4 my-2" key={image._id}>
-                <div>
-                  <Image
-                    src={image.link}
-                    alt={`${image.type} - image`}
-                    width={50}
-                    height={50}
-                    className="rounded"
-                  />
-                  <p className="text-sm text-gray-300">{image.type}</p>
-                </div>
-                <p>
-                  {image.link}
-                </p>
-                <DeleteButton id={image._id} type="image" />
-              </span>
-            ))
-          ) : (
-            <p>No images found.</p>
-          )}
-        </div>
+          <CloudUploadButton />
       </section>
       <h2 className="text-3xl font-bold m-4 text-center">Add coupon code</h2>
       <section className="grid grid-cols-1 md:grid-cols-2 items-center justify-items-center gap-4">

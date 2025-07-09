@@ -27,7 +27,6 @@ export default function BookNow({ roomdata, coupons }) {
     handleSubmit,
     control,
     watch,
-    trigger,
     getValues,
     setValue,
     reset,
@@ -39,7 +38,6 @@ export default function BookNow({ roomdata, coupons }) {
   });
   // ✅ Normalize both date arrays before comparing
   const normalizeDate = (date) => new Date(date).toISOString().split("T")[0];
-  const selectedMethod = watch("paymentMethod");
   const [SelectIn, SelectOut] = watch(["checkin", "checkout"]);
   const selectedRooms = watch("rooms");
   const dateArr = generateDateRange(SelectIn, SelectOut).map(normalizeDate); // Ensures format

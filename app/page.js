@@ -2,30 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { connectDB } from "@/lib/mongoose";
-import Img from "@/models/Img";
+import { cloudinary } from '@/lib/cloudinary';
 import AnnouncementSchema from "@/models/Announcement";
 import Gallary from "@/components/Gallary";
 import Announcement from "@/components/Announcement";
 
 export default async function Home() {
-  let imgs = [];
   let notices = [];
-  let imgDoc = null;  // Declare once here
 
   try {
     await connectDB();
-    const rawDocs = await Img.find({ type: "carousel" }).sort({ _id: -1 }).lean();
     const rowDocs = await AnnouncementSchema.find().sort({ _id: -1 }).lean();
-
-    imgDoc = await Img.findOne({ type: "main" }).sort({ _id: -1 }).lean();  // Assign here, no const
-
-    imgs = rawDocs.map(doc => ({
-      ...doc,
-      _id: doc._id.toString(),
-      createdAt: doc.createdAt.toISOString(),
-      updatedAt: doc.updatedAt.toISOString()
-    }));
-
     notices = rowDocs.map(doc => ({
       ...doc,
       _id: doc._id.toString(),
@@ -40,6 +27,15 @@ export default async function Home() {
   } catch (error) {
     console.log(error);
   }
+  // Fetch images from Cloudinary folder "next-hotel"
+  const result = await cloudinary.search
+    .expression('folder:next-hotel')
+    .sort_by('created_at', 'desc')
+    .max_results(20)
+    .execute();
+
+  // Extract secure URLs (recommended for next/image)
+  const imageUrls = result.resources.map(img => img.secure_url);
 
   return (
     <main>
@@ -48,14 +44,12 @@ export default async function Home() {
       ))}
       <div className="w-full h-screen absolute top-0 left-0 -z-10">
         <Suspense fallback={<div className="w-full h-screen bg-emerald-950"></div>}>
-          {imgDoc?.link && (
             <Image
-              src={imgDoc.link}
+              src="https://images.pexels.com/photos/939715/pexels-photo-939715.jpeg?"
               alt="Main background"
               fill={true}
               className="object-cover grayscale-25 contrast-100 saturate-100 brightness-60"
             />
-          )}
         </Suspense>
         <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
           <div className="flex flex-col justify-center items-center mt-[10%] backdrop-blur-[16px] py-10 px-30 rounded-4xl hbox w-2/3">
@@ -72,9 +66,12 @@ export default async function Home() {
         <div className="flex justify-center items-center m-20">
           <Link href="/booknow" className="bg-emerald-400 animate-bounce text-emerald-950 px-10 py-5 rounded-2xl text-xl text-center font-bold shadow-black shadow-2xl hover:bg-emerald-600 hover:scale-110 hover:text-gray-300 transition-all duration-400">Your relaxing escape awaits | reserve today</Link>
         </div>
-        <Gallary li={imgs.map(doc => doc.link)} />
-        <p className="text-center">
+        <Gallary li={imageUrls} />
+        <p className="text-center my-2">
           &copy; 2025 Bandarban. All rights reserved.
+        </p>
+        <p className="text-center my-2">
+          This website is developed by - Pratush - <Link href={"https://pratushportfolio.vercel.app/"}>pratushportfolio.vercel.app</Link>
         </p>
       </div>
     </main>
